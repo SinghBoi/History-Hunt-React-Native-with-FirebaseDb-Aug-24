@@ -8,18 +8,20 @@ const SignUp = () => {
        <View style={styles.container}>
            <View style={styles.titleContainer}>
                 <Text style={styles.backArrow}> ← </Text>
-                <Title> History Hunt</Title>
+                <Title> History Hunt </Title>
            </View>
            <View style={styles.signUpContainer}>
                <View style={styles.formContainer}>
-                    <Text style={styles.profileText}>Profile</Text>
+                    <Text style={styles.profileText}> Profile </Text>
                     <TextInput placeholder='Email' style={styles.textInput}></TextInput>
                     <TextInput placeholder='Name' style={styles.textInput}></TextInput>
                     <TextInput placeholder='Password' style={styles.textInput}></TextInput>
                    <Button> SIGN UP </Button>
-                   <Text style={styles.termCondition}>By signing up I accept the <Text style={styles.underlineText}>term of use</Text> and the <Text style={styles.underlineText}>data privacy policy. </Text></Text>
-                   <Text style={styles.text}> Already have an account</Text>
-                   <Text style={styles.loginText}>Log in here</Text>
+                   <Text style={styles.termCondition}> By signing up I accept the 
+                   <Text style={styles.underlineText}> term of use </Text> and the 
+                   <Text style={styles.underlineText}> data privacy policy. </Text></Text>
+                   <Text style={styles.text}> Already have an account? </Text>
+                   <Text style={styles.loginText}> Log in here </Text>
                </View>
         </View>   
     </View>

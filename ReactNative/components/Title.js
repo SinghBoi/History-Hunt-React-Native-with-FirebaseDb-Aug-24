@@ -2,14 +2,14 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 
-const Title = ({ children }) => {
+const Title = ({children}) => {
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#0F37DF', '#A20FDF']} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} style={styles.button}>  
+      <LinearGradient colors={['#0F37DF', '#A20FDF']} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} style={styles.button}>
       <Image source={require('../assets/historyicon.png')} style={styles.image} />
       </LinearGradient>
 
-      <Text style={styles.text}>{children }</Text>
+      <Text style={styles.text}> {children} </Text>
     </View>
   )
 }
