@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import SignUp from './screens/SignUp';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>History Hunt App</Text>
-      <StatusBar style="auto" />
+      <SignUp />
     </View>
   );
 }
@@ -13,7 +13,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
