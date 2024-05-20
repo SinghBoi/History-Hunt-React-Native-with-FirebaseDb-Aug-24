@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const StartScreen = () => {
+const StartScreen = ({navigation}) => {
   return (
     <View>
-      <Text> StartScreen </Text>
+      <Text> This is start page </Text>
     </View>
   )
 }

@@ -4,7 +4,8 @@ import Title from '../components/Title'
 import Button from '../components/Button'
 
 const Login = () => {
-  return (
+    return (
+      <View style={styles.mainContainer}>
     <View style={styles.container}>
            <View style={styles.titleContainer}>
                 <Title> History Hunt </Title>
@@ -20,10 +21,16 @@ const Login = () => {
                </View>
         </View>   
     </View>
+        </View>
   )
 }
 
 const styles = StyleSheet.create({
+     mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
     container: {
         margin: 50,
         alignItems: 'center',

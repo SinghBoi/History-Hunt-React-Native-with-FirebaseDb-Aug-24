@@ -1,12 +1,14 @@
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity} from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 
-const Button = ({children}) => {
+const Button = ({children, onPressHandler}) => {
   return (
-    <LinearGradient colors={['#0F37DF', '#A20FDF']} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} style={styles.button}>
+    <TouchableOpacity onPress={onPressHandler}>
+      <LinearGradient colors={['#0F37DF', '#A20FDF']} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} style={styles.button}>
       <Text style={styles.text}> {children} </Text>
-    </LinearGradient>
+      </LinearGradient>
+    </TouchableOpacity>
   )
 }
 
