@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,8 +14,8 @@ export default function App() {
       <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name='SignUp' component={SignUp} />
-          <Stack.Screen name='Login' component={Login} />  
+          <Stack.Screen name='Login' component={Login} />
+          <Stack.Screen name='SignUp' component={SignUp} />  
           <Stack.Screen name='StartScreen' component={StartScreen} />
         </Stack.Navigator>
       </NavigationContainer>

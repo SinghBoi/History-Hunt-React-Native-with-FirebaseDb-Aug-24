@@ -6,7 +6,7 @@ const Button = ({children, onPressHandler}) => {
   return (
     <TouchableOpacity onPress={onPressHandler}>
       <LinearGradient colors={['#0F37DF', '#A20FDF']} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} style={styles.button}>
-      <Text style={styles.text}> {children} </Text>
+        <Text style={styles.text}> {children} </Text>
       </LinearGradient>
     </TouchableOpacity>
   )

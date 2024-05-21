@@ -1,45 +1,62 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, TextInput, Alert } from 'react-native'
+import React, { useState } from 'react'
 import Title from '../components/Title'
 import Button from '../components/Button'
 
-const Login = () => {
+const Login = ({ navigation }) => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    onPressHandler = () => {
+        if (email && password) {
+            Alert.alert('Login successfull');
+            navigation.navigate('StartScreen');
+        } else {
+            Alert.alert('Error', 'Please fill all the details');
+        }
+    }
+    
     return (
-      <View style={styles.mainContainer}>
-    <View style={styles.container}>
-           <View style={styles.titleContainer}>
+    <View style={styles.mainContainer}>
+        <View style={styles.container}>
+            <View style={styles.titleContainer}>
                 <Title> History Hunt </Title>
-           </View>
-           <View style={styles.loginContainer}>
-               <View style={styles.formContainer}>
-                    <Text style={styles.loginText}> Login </Text>
-                    <TextInput placeholder='Email' style={styles.textInput}></TextInput>
-                    <TextInput placeholder='Password' style={styles.textInput}></TextInput>
-                   <Button> CONTINUE </Button>
-                   <Text style={styles.text}> Need to make an account? </Text>
-                   <Text style={styles.signUpText}> Sign up here </Text>
-               </View>
-        </View>   
-    </View>
+            </View>
+            <View style={styles.loginContainer}>
+                <View style={styles.formContainer}>
+                    <Text style={styles.loginText}> Log In </Text>
+                    <TextInput placeholder='Email' style={styles.textInput} value={email} onChangeText={setEmail} />
+                    <TextInput placeholder='Password' style={styles.textInput} 
+                        value={password} onChangeText={setPassword}secureTextEntry />
+                    <Button onPressHandler={onPressHandler}> CONTINUE </Button>
+                </View>
+                <View style={styles.formContainer}>
+                    <Text style={styles.text}> Need to make an account? </Text>
+                    <Text style={styles.signUpText} onPress={()=> navigation.navigate('SignUp')}> Sign up here </Text>
+                </View>
+            </View>   
         </View>
-  )
-}
+    </View>
+)}
 
 const styles = StyleSheet.create({
-     mainContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    mainContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     container: {
         margin: 50,
         alignItems: 'center',
         justifyContent: 'center',
     },
     titleContainer: {
-        flex:1,
+        flex: 1,
         flexDirection: 'row',
-        margin: 0,
+        marginTop: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     loginText: {
         fontSize: 34,
