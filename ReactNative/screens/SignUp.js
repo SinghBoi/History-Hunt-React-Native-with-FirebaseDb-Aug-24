@@ -1,38 +1,21 @@
 import { View, Text, StyleSheet, TextInput, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Title from '../components/Title'
 import Button from '../components/Button'
+import SignUpForm from '../components/SignUpForm'
+import { UserContext } from '../store/userContext'
 
-const SignUp = ({ navigation }) => {
-  
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
-
-    onPressHandler = () => {
-        if (email && name && password) {
-            Alert.alert('User created successfully');
-            navigation.navigate('Login');
-        } else {
-      Alert.alert('Error', 'Please fill all the details');
-        }
-    }
+const SignUp = ({ navigation }) => {   
 
     return (
     <View style={styles.mainContainer}>
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                {/* <Text style={styles.backArrow} onPress={()=> navigation.navigate('Login')} > ← </Text> */}
                 <Title> History Hunt </Title>
             </View>
             <View style={styles.signUpContainer}>
                 <View style={styles.formContainer}>
-                    <Text style={styles.profileText}> Profile </Text>
-                    <TextInput placeholder='Email' style={styles.textInput} value={email} onChangeText={setEmail} />
-                    <TextInput placeholder='Name' style={styles.textInput} value={name} onChangeText={setName} />
-                    <TextInput  placeholder='Password' style={styles.textInput} 
-                        value={password} onChangeText={setPassword}secureTextEntry />
-                    <Button onPressHandler={onPressHandler}> SIGN UP </Button>
+                    <SignUpForm />                    
                 </View>                    
                 <View style={styles.formContainer}>
                     <Text style={styles.termCondition}> By signing up I accept the
@@ -63,12 +46,6 @@ const styles = StyleSheet.create({
         marginTop: 40,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    backArrow: {
-        textAlign: 'left',
-        fontWeight: '900',
-        color: '#0F37DF',
-        fontSize: 40,
     },
     profileText: {
         fontSize: 34,
