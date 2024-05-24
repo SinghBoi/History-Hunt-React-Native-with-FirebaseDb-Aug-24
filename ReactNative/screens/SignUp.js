@@ -36,14 +36,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     container: {
-        margin: 50,
         alignItems: 'center',
         justifyContent: 'center',
     },
     titleContainer: {
         flex: 1,
         flexDirection: 'row',
-        marginTop: 40,
+        marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
     },

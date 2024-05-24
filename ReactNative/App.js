@@ -1,3 +1,4 @@
+import 'react-native-get-random-values'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import SignUp from './screens/SignUp';

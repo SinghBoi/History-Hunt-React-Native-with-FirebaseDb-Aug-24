@@ -1,5 +1,4 @@
 import { createContext, useReducer } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 const USERDB = [
   {
@@ -18,7 +17,7 @@ export const UserContext = createContext({
 const userReducer = (state, action) => {
     switch (action.type) {
         case "ADD":
-            const id = uuidv4();
+            const id = new Date().toString() + Math.random();
             return [{ id, ...action.payload }, ...state]
         default:
             return state
