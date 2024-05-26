@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TextInput, Alert } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import Title from '../components/Title'
 import Button from '../components/Button'
 import SignUpForm from '../components/SignUpForm'
@@ -22,7 +22,7 @@ const SignUp = ({ navigation }) => {
                     <Text style={styles.underlineText}> term of use </Text> and the
                     <Text style={styles.underlineText}> data privacy policy. </Text></Text>
                     <Text style={styles.text}> Already have an account? </Text>
-                    <Text style={styles.loginText} onPress={()=> navigation.navigate('Login')}> Log in here </Text>
+                    <Text style={styles.loginText} onPress={()=> navigation.navigate('LoginScreen')}> Log in here </Text>
                 </View>
             </View>   
         </View>
@@ -46,25 +46,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    profileText: {
-        fontSize: 34,
-        textAlign: 'center',
-        fontWeight: '500',
-        marginTop: 40,
-        marginBottom: 10,
-    },
     signUpContainer: {
         flex: 4,
         marginTop: 26,
         alignItems: 'center',
-    },
-    textInput: {
-        marginBottom: 5,
-        borderWidth: 1,
-        borderColor: 'gray',
-        padding: 5,
-        borderRadius: 6,
-        width: 200,
     },
     formContainer: {
         alignContent: 'center',

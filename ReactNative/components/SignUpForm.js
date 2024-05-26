@@ -1,25 +1,22 @@
-import { View, Text, StyleSheet, } from 'react-native'
-import React, { useContext, useState } from 'react'
+import { View, Text, StyleSheet, Alert } from 'react-native';
+import React, { useContext, useState } from 'react';
 import * as Crypto from 'expo-crypto';
-import Input from './Input'
-import Button from './Button'
-import { useNavigation } from '@react-navigation/native'
-import { UserContext } from '../store/userContext'
-import { storeUser } from '../util/http'
-
+import Input from './Input';
+import Button from './Button';
+import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../store/userContext';
 
 const SignUpForm = () => {
-    const [inputValue, setInputValue] = useState({ email: "", fullName: "", password: "" })
+    const [inputValue, setInputValue] = useState({ email: "", fullName: "", password: "" });
 
-    const userContext = useContext(UserContext)
-    
-    const navigation = useNavigation()
+    const userContext = useContext(UserContext);
+    const navigation = useNavigation();
 
     const inputHandler = (valueInputProperty, text) => {
         setInputValue((prev) => ({
             ...prev,
             [valueInputProperty]: text,
-        }))
+        }));
     };
 
     const encryptPassword = async (password) => {
@@ -35,34 +32,58 @@ const SignUpForm = () => {
         }
     };
 
-    const onPressHandler = () => {     
-
+    const onPressHandler = async () => {
         if (inputValue.email !== "" && inputValue.fullName !== "" && inputValue.password !== "") {
-        const password = encryptPassword(inputValue.password)
-        const user = {
-            email: inputValue.email, fullName:  inputValue.fullName, password: password
+            const password = await encryptPassword(inputValue.password);
+            if (password) {
+                const user = {
+                    email: inputValue.email,
+                    fullName: inputValue.fullName,
+                    password: password,
+                };
+                userContext.addUser(user);
+                Alert.alert('Success', 'User created successfully');
+                navigation.navigate('LoginScreen');
+            } else {
+                Alert.alert('Error', 'Password encryption failed');
             }
-            console.log("usr pass",user.password)
-            console.log("pass",password)
-            storeUser(user)
-            userContext.addUser(user)
-            alert('User created successfully');
-            navigation.navigate('Login');
         } else {
-        alert('Error', 'Please fill all the details');
+            Alert.alert('Error', 'Please fill all the details');
         }
-    }
+    };
 
-  return (
-    <View>
-          <Text style={styles.profileText}> Profile </Text>
-          <Input style={styles.textInput}   textInputConfig={{ keyboardType:"email-address",autoCapitalize:"none", autoCorrect: false, onChangeText:  inputHandler.bind(this, "email") , placeholder: "Email", }} />
-          <Input style={styles.textInput} textInputConfig={{  onChangeText: inputHandler.bind(this, "fullName"), placeholder: "Name", }} />
-          <Input style={styles.textInput} textInputConfig={{ secureTextEntry: true, onChangeText: inputHandler.bind(this, "password"), placeholder: "Password", }} />
-          <Button onPressHandler={onPressHandler}> SIGN UP </Button>
-    </View>
-  )
-}
+    return (
+        <View>
+            <Text style={styles.profileText}> Sign Up </Text>
+            <Input
+                style={styles.textInput}
+                textInputConfig={{
+                    keyboardType: "email-address",
+                    autoCapitalize: "none",
+                    autoCorrect: false,
+                    onChangeText: inputHandler.bind(this, "email"),
+                    placeholder: "Email",
+                }}
+            />
+            <Input
+                style={styles.textInput}
+                textInputConfig={{
+                    onChangeText: inputHandler.bind(this, "fullName"),
+                    placeholder: "Name",
+                }}
+            />
+            <Input
+                style={styles.textInput}
+                textInputConfig={{
+                    secureTextEntry: true,
+                    onChangeText: inputHandler.bind(this, "password"),
+                    placeholder: "Password",
+                }}
+            />
+            <Button onPressHandler={onPressHandler}> SIGN UP </Button>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     profileText: {
@@ -80,5 +101,6 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         width: 200,
     },
-})
-export default SignUpForm
+});
+
+export default SignUpForm;
