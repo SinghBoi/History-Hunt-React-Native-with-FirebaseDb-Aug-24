@@ -1,16 +1,33 @@
 import { View, Text, StyleSheet, Alert } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import * as Crypto from 'expo-crypto';
 import Input from './Input';
 import Button from './Button';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../store/userContext';
+import { getUser } from '../util/http';
 
 const SignUpForm = () => {
     const [inputValue, setInputValue] = useState({ email: "", fullName: "", password: "" });
 
     const userContext = useContext(UserContext);
     const navigation = useNavigation();
+    const [user, setUser] = useState(null)
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const userDB = await getUser(inputValue.email);
+                setUser(userDB)
+                } catch (error) {
+                console.error("Error fetching user:", error);
+            }
+        };
+        if (inputValue.email) {
+            fetchUser();
+        }
+  }, [inputValue.email]);
 
     const inputHandler = (valueInputProperty, text) => {
         setInputValue((prev) => ({
@@ -32,25 +49,54 @@ const SignUpForm = () => {
         }
     };
 
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const handleExistingUser = () => {
+        Alert.alert('User already exists Please log in instead.');
+    };
+    const handleNewUser = async () => {
+        const isValidMail = isValidEmail(inputValue.email);
+        if (!isValidMail) {
+            Alert.alert('Invalid Email', 'Please enter a valid email address.');
+            return;
+        }
+
+        if (!isValidInput()) {
+            Alert.alert('Incomplete Details', 'Please fill all the details.');
+            return;
+        }
+
+        const encryptedPassword = await encryptPassword(inputValue.password);
+        if (!encryptedPassword) {
+            Alert.alert('Error', 'Password encryption failed');
+            return;
+        }
+
+        const newUser = {
+            email: inputValue.email,
+            fullName: inputValue.fullName,
+            password: encryptedPassword,
+        };
+
+        userContext.addUser(newUser);
+        Alert.alert('Success', 'User created successfully');
+        navigation.navigate('LoginScreen');
+    };
+    const isValidInput = () => {
+        return inputValue.email !== "" && inputValue.fullName !== "" && inputValue.password !== "";
+    };
+
     const onPressHandler = async () => {
-        if (inputValue.email !== "" && inputValue.fullName !== "" && inputValue.password !== "") {
-            const password = await encryptPassword(inputValue.password);
-            if (password) {
-                const user = {
-                    email: inputValue.email,
-                    fullName: inputValue.fullName,
-                    password: password,
-                };
-                userContext.addUser(user);
-                Alert.alert('Success', 'User created successfully');
-                navigation.navigate('LoginScreen');
-            } else {
-                Alert.alert('Error', 'Password encryption failed');
-            }
+        if (user) {
+            handleExistingUser();
         } else {
-            Alert.alert('Error', 'Please fill all the details');
+            handleNewUser();
         }
     };
+
 
     return (
         <View>
