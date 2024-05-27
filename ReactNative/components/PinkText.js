@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
-const PinkText = ({children}) => {
+const PinkText = ({children, style}) => {
   return (
     <View>
-      <Text style={styles.textColor}>{children}</Text>
+      <Text style={style}>{children}</Text>
     </View>
     
   )

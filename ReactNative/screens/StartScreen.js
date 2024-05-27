@@ -7,7 +7,7 @@ import Medals from '../components/Medals'
 
 const StartScreen = ({navigation}) => {
   return (
-    <View>
+    <View style={styles.container}>
       <User />
       <ActiveHunts />
       <PlannedHunts />
@@ -18,6 +18,11 @@ const StartScreen = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 20,
+    padding: 30,
+    },
   createHuntText: {
     color: 'orange',
     textDecorationLine: 'underline',

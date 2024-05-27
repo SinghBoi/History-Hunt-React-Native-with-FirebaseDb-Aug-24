@@ -11,7 +11,7 @@ const CreateHunt = () => {
     <View style={styles.container}>
       <Text style={styles.headerText}>Customize</Text>
       <View>
-        <PinkText>How long should it be?</PinkText>
+        <PinkText style={styles.textColor}>How long should it be?</PinkText>
         <Input
           style={styles.textInput}
           textInputConfig={{
@@ -47,7 +47,12 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 6,
     width: 200,
-    },
+  },
+  textColor: {
+    color: '#A20FDF',
+    fontWeight: 'bold',
+    textAlign:'center',
+  }
 })
 
 export default CreateHunt
