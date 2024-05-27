@@ -13,7 +13,6 @@ const SignUpForm = () => {
     const userContext = useContext(UserContext);
     const navigation = useNavigation();
     const [user, setUser] = useState(null)
-    const [error, setError] = useState(null)
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -68,17 +67,12 @@ const SignUpForm = () => {
             Alert.alert('Incomplete Details', 'Please fill all the details.');
             return;
         }
-
-        const encryptedPassword = await encryptPassword(inputValue.password);
-        if (!encryptedPassword) {
-            Alert.alert('Error', 'Password encryption failed');
-            return;
-        }
+        const password = encryptPassword(inputValue.password)
 
         const newUser = {
             email: inputValue.email,
             fullName: inputValue.fullName,
-            password: encryptedPassword,
+            password: password,
         };
 
         userContext.addUser(newUser);
