@@ -12,6 +12,20 @@ const LoginForm = () => {
     const userContext = useContext(UserContext);
     const navigation = useNavigation();
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const userDB = await getUser(inputValue.email);
+                setUser(userDB)
+                } catch (error) {
+                console.error("Error fetching user:", error);
+            }
+        };
+        if (inputValue.email) {
+            fetchUser();
+        }
+  }, [inputValue.email]);
+
     const inputHandler = (valueInputProperty, text) => {
         setInputValue((prev) => ({
             ...prev,
