@@ -12,20 +12,6 @@ const LoginForm = () => {
     const userContext = useContext(UserContext);
     const navigation = useNavigation();
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const userDB = await getUser(inputValue.email);
-                setUser(userDB)
-                } catch (error) {
-                console.error("Error fetching user:", error);
-            }
-        };
-        if (inputValue.email) {
-            fetchUser();
-        }
-  }, [inputValue.email]);
-
     const inputHandler = (valueInputProperty, text) => {
         setInputValue((prev) => ({
             ...prev,
@@ -48,7 +34,7 @@ const LoginForm = () => {
 
     const onPressHandler = async () => {
         if (inputValue.email !== "" && inputValue.password !== "") {
-            const user = userContext.findUser(inputValue.email);
+            const user = await userContext.findUser(inputValue.email);
             if (user) {
                 const encryptedPassword = await encryptPassword(inputValue.password);
                 if (encryptedPassword && encryptedPassword === user.password) {
