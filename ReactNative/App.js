@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StartScreen from './screens/StartScreen';
 import UserContextProvider from './store/userContext';
+import CreateHunt from './components/CreateHunt';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,9 +18,10 @@ export default function App() {
       <UserContextProvider >
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name='LoginScreen' component={LoginScreen} />
-            <Stack.Screen name='SignUpScreen' component={SignUpScreen} />  
-            <Stack.Screen name='StartScreen' component={StartScreen} />
+            <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false}}/> 
+            <Stack.Screen name='SignUpScreen' component={SignUpScreen} options={{ headerShown: false}}/>  
+            <Stack.Screen name='StartScreen' component={StartScreen} options={{ headerShown: false}}/>
+            <Stack.Screen name="createHunt" component={CreateHunt} options={{ headerShown: false}}/>
           </Stack.Navigator>
         </NavigationContainer>
       </UserContextProvider>

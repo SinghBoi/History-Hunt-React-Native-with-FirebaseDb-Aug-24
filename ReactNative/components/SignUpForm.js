@@ -67,7 +67,7 @@ const SignUpForm = () => {
             Alert.alert('Incomplete Details', 'Please fill all the details.');
             return;
         }
-        const password = encryptPassword(inputValue.password)
+        const password = await encryptPassword(inputValue.password)
 
         const newUser = {
             email: inputValue.email,
@@ -115,6 +115,8 @@ const SignUpForm = () => {
             <Input
                 style={styles.textInput}
                 textInputConfig={{
+                    autoCapitalize: "none",
+                    autoCorrect: false,
                     secureTextEntry: true,
                     onChangeText: inputHandler.bind(this, "password"),
                     placeholder: "Password",

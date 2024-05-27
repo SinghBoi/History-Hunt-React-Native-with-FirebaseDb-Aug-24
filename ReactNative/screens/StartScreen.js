@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import User from '../components/User'
 import ActiveHunts from '../components/ActiveHunts'
@@ -11,10 +11,19 @@ const StartScreen = ({navigation}) => {
       <User />
       <ActiveHunts />
       <PlannedHunts />
-      <Text> Create a Hunt</Text>
+      <Text style={styles.createHuntText} onPress={()=> navigation.navigate('createHunt')}> Create a Hunt</Text>
       <Medals />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  createHuntText: {
+    color: 'orange',
+    textDecorationLine: 'underline',
+    fontSize: 16,
+    fontWeight: 'bold'
+  }
+})
 
 export default StartScreen
