@@ -1,9 +1,6 @@
-import { View, Text, StyleSheet, TextInput, Alert } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 import Title from '../components/Title'
-import Button from '../components/Button'
 import LoginForm from '../components/LoginForm'
-import { UserContext } from '../store/userContext'
 
 const Login = ({ navigation }) => {
 

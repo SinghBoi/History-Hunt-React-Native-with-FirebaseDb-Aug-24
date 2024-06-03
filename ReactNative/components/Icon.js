@@ -6,7 +6,7 @@ const Icon = ({icon, size, color, onPressHandler}) => {
   return (
     <Pressable  onPress={onPressHandler}>
         <View>
-            <MaterialIcons name={icon} size={size} color={color} />
+          <MaterialIcons name={icon} size={size} color={color} />
         </View>      
     </Pressable>
   )

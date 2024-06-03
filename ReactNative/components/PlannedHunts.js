@@ -6,7 +6,7 @@ import Hunt from './Hunt'
 const PlannedHunts = () => {
   return (
     <View style={styles.container}>
-      <PinkText style={styles.text}>PlannedHunts</PinkText>
+      <PinkText style={styles.text}> Planned Hunts </PinkText>
       <Hunt hunt="here is first hunts name" />
     </View>
   )

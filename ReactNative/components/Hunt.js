@@ -9,7 +9,7 @@ const Hunt = ({hunt}) => {
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.heading}>{hunt}</Text>
-        <Text>objective</Text>
+        <Text> Objective </Text>
       </View>      
     </View>
   )
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom:10,
   },
-
   heading: {
     fontWeight: 'bold',
   },
@@ -29,11 +28,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: '#A20FDF',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#A20FDF',
   },
   infoContainer: {
     flex: 4,

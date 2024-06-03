@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import PinkText from './PinkText'
 import Hunt from './Hunt'
@@ -6,7 +6,7 @@ import Hunt from './Hunt'
 const ActiveHunts = () => {
   return (
     <View style={styles.container}>
-      <PinkText style={styles.text}>ActiveHunts</PinkText>
+      <PinkText style={styles.text}> Active Hunts </PinkText>
       <Hunt hunt="here is first hunts name" />
       <Hunt hunt= "here is second hunts name" />
     </View>
