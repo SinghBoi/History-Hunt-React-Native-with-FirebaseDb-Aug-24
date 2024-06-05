@@ -111,12 +111,16 @@ const SignUpForm = () => {
         textInputConfig={{
           onChangeText: inputHandler.bind(this, "fullName"),
           placeholder: "Name",
+          autoCorrect: false,
+          autoCapitalize: "none",
         }}
       />
       <Input
         style={styles.textInput}
         textInputConfig={{
           secureTextEntry: true,
+          autoCorrect: false,
+          autoCapitalize: "none",
           onChangeText: inputHandler.bind(this, "password"),
           placeholder: "Password",
         }}

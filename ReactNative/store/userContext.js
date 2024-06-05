@@ -1,15 +1,7 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid'
-import { getUser, storeUser } from '../util/http';
+import { getUser, storeUser, getUsers, getAllUsers } from '../util/http';
 
-const USERDB = [
-//   {
-//     id: "m1",
-//     email: "meena@gmail.com",
-//     fullName: "meena Dhaka",
-//     password: "meena123",
-//   },
-];
 
 export const UserContext = createContext({
     users: [],
@@ -22,13 +14,28 @@ const userReducer = (state, action) => {
         case "ADD":
             const id = uuidv4();
             return [{ id, ...action.payload }, ...state];
+        case "SET":
+            return action.payload;
         default:
             return state;
     }
 };
 
 const UserContextProvider = ({ children }) => {
-    const [users, dispatch] = useReducer(userReducer, USERDB);
+    const [users, dispatch] = useReducer(userReducer, []);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const fetchedUsers = await getAllUsers();
+                dispatch({ type: "SET", payload: fetchedUsers });
+            } catch (error) {
+                console.error("Failed to fetch users:", error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
     
     const addUser = async (user) => {
         await storeUser(user);
