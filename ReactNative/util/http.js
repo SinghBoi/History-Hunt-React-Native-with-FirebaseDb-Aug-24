@@ -39,4 +39,13 @@ const getAllUsers = async () => {
     }
 };
 
-export { storeUser, getUser, getAllUsers };
+// Function to update a user
+const updateUser = async (userId, updatedUser) => {
+    try {
+        await axios.patch(`${rootUrl}/users/${userId}.json`, updatedUser);
+    } catch (error) {
+        console.error("Error updating user:", error);
+    }
+};
+
+export { storeUser, getUser, getAllUsers, updateUser };

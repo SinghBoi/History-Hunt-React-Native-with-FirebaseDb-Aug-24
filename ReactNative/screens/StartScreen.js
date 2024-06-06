@@ -5,10 +5,11 @@ import ActiveHunts from '../components/ActiveHunts'
 import PlannedHunts from '../components/PlannedHunts'
 import Medals from '../components/Medals'
 
-const StartScreen = ({navigation}) => {
+const StartScreen = ({ route, navigation }) => {
+  const { user } = route.params;
   return (
     <View style={styles.container}>
-      <User />
+      <User user={user} />
       <ActiveHunts />
       <PlannedHunts />
       <Text style={styles.createHuntText} onPress={()=> navigation.navigate('createHunt')}> Create a Hunt</Text>

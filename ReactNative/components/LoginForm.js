@@ -39,7 +39,7 @@ const LoginForm = () => {
         const encryptedPassword = await encryptPassword(inputValue.password);
         if (encryptedPassword && encryptedPassword === user.password) {
           Alert.alert('Success', 'User Logged In successfully');
-          navigation.navigate('StartScreen');
+          navigation.navigate('StartScreen', {user});
         } else {
           Alert.alert('Error', 'Incorrect password');
         }

@@ -6,7 +6,8 @@ import { getUser, storeUser, getUsers, getAllUsers } from '../util/http';
 export const UserContext = createContext({
     users: [],
     addUser: ({ email, fullName, password }) => {},
-    findUser: async (email) => {},
+    findUser: async (email) => { },
+    updateUser: (id, updatedUser) => {},
 });
 
 const userReducer = (state, action) => {
@@ -16,6 +17,13 @@ const userReducer = (state, action) => {
             return [{ id, ...action.payload }, ...state];
         case "SET":
             return action.payload;
+        case "UPDATE":
+            const index = state.findIndex((usr) => usr.id === action.payload.id);
+            const user = state[index];
+            const updatedUser = { ...user, ...action.payload.data };
+            const updatedUsers = [...state];
+            updatedUsers[index] = updatedUser;
+            return updatedUsers; 
         default:
             return state;
     }
@@ -46,10 +54,15 @@ const UserContextProvider = ({ children }) => {
         return await getUser(email);
     };
 
+    const updateUser = (id, user) => {
+        dispatch({ type: "UPDATE", payload: { id, data: user } });
+    };
+
     const value = {
         users,
         addUser,
         findUser,
+        updateUser
     };
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
