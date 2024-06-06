@@ -4,7 +4,7 @@ import React from 'react'
 const PinkText = ({children, style}) => {
   return (
     <View>
-      <Text style={style}>{children}</Text>
+      <Text style={styles.textColor}>{children}</Text>
     </View>
     
   )

@@ -1,11 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import Title from '../components/Title'
 import SignUpForm from '../components/SignUpForm'
 
-const SignUp = ({ navigation }) => {   
-
+const SignUp = ({ navigation }) => {  
     return (
-    <View style={styles.mainContainer}>
+    <ScrollView style={styles.mainContainer}>
         <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <Title> History Hunt </Title>
@@ -23,14 +22,12 @@ const SignUp = ({ navigation }) => {
                 </View>
             </View>   
         </View>
-    </View>   
+    </ScrollView>   
 )}
 
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     container: {
         alignItems: 'center',

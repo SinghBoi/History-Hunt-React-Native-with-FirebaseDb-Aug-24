@@ -29,6 +29,12 @@
         {
           "photosPermission": "The app need your permission to access images."
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "The app need to use your location."
+        }
       ]
     ]
   }

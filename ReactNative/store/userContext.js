@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid'
-import { getUser, storeUser, getUsers, getAllUsers } from '../util/http';
+import { getUser, storeUser, getAllUsers, updateUser } from '../util/http';
 
 
 export const UserContext = createContext({
@@ -54,8 +54,8 @@ const UserContextProvider = ({ children }) => {
         return await getUser(email);
     };
 
-    const updateUser = (id, user) => {
-        dispatch({ type: "UPDATE", payload: { id, data: user } });
+    const updateUser = async(id, user) => {
+        return await updateUser(id, user)
     };
 
     const value = {
