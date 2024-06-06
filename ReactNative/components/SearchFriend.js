@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   icon: {
-    marginLeft: 10,
+    marginTop: 10,
+    marginBottom: 0,
   },
   suggestedText: {
     color: 'white',
