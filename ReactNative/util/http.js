@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const rootUrl = "https://historyhunt-5bec8-default-rtdb.europe-west1.firebasedatabase.app";
+const rootUrl = "https://history-hunt-project-default-rtdb.europe-west1.firebasedatabase.app";
 
 //function to save a new user
 const storeUser = async (user) => {
