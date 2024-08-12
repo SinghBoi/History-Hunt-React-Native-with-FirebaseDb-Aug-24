@@ -4,7 +4,7 @@ import Input from './Input'
 import Button from './Button'
 import PinkText from './PinkText'
 
-const CreateHunt = () => {
+const CreateHunt = ({ navigation }) => {
   const inputHandler = () => {
     // Add your logic for handling the input here
   }
