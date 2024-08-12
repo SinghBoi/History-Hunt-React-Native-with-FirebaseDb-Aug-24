@@ -36,7 +36,7 @@ const UserContextProvider = ({ children }) => {
         const fetchUsers = async () => {
             try {
                 const fetchedUsers = await getAllUsers();
-                dispatch({ type: "SET", payload: fetchedUsers });
+                dispatch({ type: 'SET', payload: Object.keys(fetchedUsers).map(key => ({ id: key, ...fetchedUsers[key] })) });
             } catch (error) {
                 console.error("Failed to fetch users:", error);
             }

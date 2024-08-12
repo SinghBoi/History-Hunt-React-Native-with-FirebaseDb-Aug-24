@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     marginBottom:10,
   },
   heading: {
-    fontWeight: 'bold',
+    fontWeight: "900",
   },
   imgContainer: {
     flex: 1,

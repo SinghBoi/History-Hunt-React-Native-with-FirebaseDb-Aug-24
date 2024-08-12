@@ -2,6 +2,8 @@ import axios from "axios"
 
 const rootUrl = "https://history-hunt-project-default-rtdb.europe-west1.firebasedatabase.app";
 
+const API_KEY = "AIzaSyAEDyzpgNt0mGvRjr2EQaNuoxxk9duP2mw"
+
 //function to save a new user
 const storeUser = async (user) => {
     try {
@@ -47,5 +49,21 @@ const updateUser = async (userId, updatedUser) => {
         console.error("Error updating user:", error);
     }
 };
+
+
+//Adding auth
+
+export const signupUser = async(email, password) => {
+    const resp = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${ API_KEY }`,
+        {
+            email,
+            password,
+            returnSecureToken: true,
+        }
+    );
+    return resp.data.idToken;
+}
+
+
 
 export { storeUser, getUser, getAllUsers, updateUser };
