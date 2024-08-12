@@ -10,7 +10,7 @@ const CreateHunt = () => {
   }
 
   const onPressHandler = async () => {
-    // Add your logic for handling the button here    
+    navigation.navigate('inviteFriend')  
   }
 
   const addImageHandler = () => {
