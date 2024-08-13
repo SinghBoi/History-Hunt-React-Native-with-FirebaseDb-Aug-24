@@ -10,6 +10,7 @@ import UserContextProvider from './store/userContext';
 import CreateHunt from './components/CreateHunt';
 import InviteFriendScreen from './screens/InviteFriendsScreen'
 import ConfirmHuntScreen from './screens/ConfirmHuntScreen';
+import LocationScreen from './screens/LocationScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -19,12 +20,14 @@ export default function App() {
       <UserContextProvider >
         <NavigationContainer>
           <Stack.Navigator>
+            <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: false}}/>
             <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false}}/> 
+            <Stack.Screen name="inviteFriend" component={InviteFriendScreen} options={{ headerShown: true,headerTitle: '',              // Removes the title
+              headerBackTitleVisible: false }} />
             <Stack.Screen name='SignUpScreen' component={SignUpScreen} options={{ headerShown: false}}/>  
             <Stack.Screen name='StartScreen' component={StartScreen} options={{ headerShown: false}}/>
             <Stack.Screen name="createHunt" component={CreateHunt} options={{ headerShown: true}}/>
             <Stack.Screen name="ConfirmHunt" component={ConfirmHuntScreen} options={{ headerShown: true}}/>
-            <Stack.Screen name="inviteFriend" component={InviteFriendScreen} options={{ headerShown: false}}/>
           </Stack.Navigator>
         </NavigationContainer>
       </UserContextProvider>

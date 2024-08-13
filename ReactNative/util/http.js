@@ -70,5 +70,16 @@ const updateUser = async (userId, updatedUser) => {
     }
 };
 
+//function to create hunt
+const createHunt = async (hunt) => {
+    try {
+        const response = await axios.post(`${rootUrl}/hunts.json`, hunt);
+        const huntId = response.data.name;
+        return huntId;
+    } catch (error) {
+        console.error("Error creating hunt:", error);
+        throw error; 
+    }
+};
 
-export { storeUser, getUser, getAllUsers, getUserId, updateUser };
+export { storeUser, getUser, getAllUsers, getUserId, updateUser, createHunt };

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid'
-import { getUser, storeUser, getAllUsers, updateUserDb } from '../util/http';
+import * as http  from '../util/http';
 
 
 export const UserContext = createContext({
@@ -34,7 +34,7 @@ const UserContextProvider = ({ children }) => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const fetchedUsers = await getAllUsers();
+                const fetchedUsers = await http.getAllUsers();
                 dispatch({ type: 'SET', payload: Object.keys(fetchedUsers).map(key => ({ id: key, ...fetchedUsers[key] })) });
             } catch (error) {
                 console.error("Failed to fetch users:", error);
@@ -49,7 +49,7 @@ const UserContextProvider = ({ children }) => {
     };
 
     const findUser = async (email) => {
-        return await getUser(email);
+        return await http.getUser(email);
     };
 
     const updateUser = async (id, user) => {

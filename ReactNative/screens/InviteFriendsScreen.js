@@ -4,9 +4,9 @@ import SearchFriend from '../components/SearchFriend'
 import Button from '../components/Button'
 import UserList from '../components/UserList'
 
-const InviteFriendsScreen = () => {
+const InviteFriendsScreen = ({navigation}) => {
     const onPressHandler = () => {
-        
+        navigation.navigate('location')
     }
   return (
     <View style={styles.container}>

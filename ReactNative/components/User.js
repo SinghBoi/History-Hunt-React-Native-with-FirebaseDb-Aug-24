@@ -85,7 +85,7 @@ const editHandler = async () => {
         <View style={styles.container}>
             <MaterialIcons style={styles.iconButton} name="logout" size={34} color="orange" onPress={onPressHandler}/>
             <View>
-                <ImageComp url={user.imageUri} style={styles.image} />
+                <ImageComp url={imageUri} style={styles.image} />
                 <MaterialIcons style={styles.editIcon} name="edit" size={15} color="white" borderRadius= '50%' onPress={editHandler}/>
             </View>
             <Text style={styles.text}>{user.fullName}</Text>

@@ -66,22 +66,20 @@ const SearchFriend = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#B3B1B3',
     borderRadius: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingHorizontal: 10, 
   },
   textInput: {
     flex: 1,
-    height: 40,
+    height: 30,
     fontSize: 16,
     color: 'red',
   },
   icon: {
-    marginTop: 10,
+    marginTop: 12,
     marginBottom: 0,
   },
   suggestedText: {
