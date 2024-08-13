@@ -1,11 +1,11 @@
 import { createContext, useEffect, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid'
-import { getUser, storeUser, getAllUsers, updateUser } from '../util/http';
+import { getUser, storeUser, getAllUsers, updateUserDb } from '../util/http';
 
 
 export const UserContext = createContext({
     users: [],
-    addUser: ({ email, fullName, password }) => {},
+    addUser: ({ email, fullName, password, imageUrl, plannedHunts, activeHunts }) => {},
     findUser: async (email) => { },
     updateUser: (id, updatedUser) => {},
 });
@@ -13,8 +13,7 @@ export const UserContext = createContext({
 const userReducer = (state, action) => {
     switch (action.type) {
         case "ADD":
-            const id = uuidv4();
-            return [{ id, ...action.payload }, ...state];
+            return [action.payload, ...state];
         case "SET":
             return action.payload;
         case "UPDATE":
@@ -46,7 +45,6 @@ const UserContextProvider = ({ children }) => {
     }, []);
     
     const addUser = async (user) => {
-        await storeUser(user);
         dispatch({ type: "ADD", payload: user });
     };
 
@@ -54,8 +52,8 @@ const UserContextProvider = ({ children }) => {
         return await getUser(email);
     };
 
-    const updateUser = async(id, user) => {
-        return await updateUser(id, user)
+    const updateUser = async (id, user) => {
+        dispatch({ type: "UPDATE", payload: { id, data: user } });        
     };
 
     const value = {

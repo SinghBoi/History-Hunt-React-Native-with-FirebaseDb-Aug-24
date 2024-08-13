@@ -2,14 +2,16 @@ import axios from "axios"
 
 const rootUrl = "https://history-hunt-project-default-rtdb.europe-west1.firebasedatabase.app";
 
-const API_KEY = "AIzaSyAEDyzpgNt0mGvRjr2EQaNuoxxk9duP2mw"
-
 //function to save a new user
 const storeUser = async (user) => {
     try {
-        await axios.post(`${rootUrl}/users.json`, user);
+        const response = await axios.post(`${rootUrl}/users.json`, user);
+        const userId = response.data.name;
+        console.log(userId)
+        return userId;
     } catch (error) {
         console.error("Error storing user:", error);
+        throw error; 
     }
 };
 
@@ -26,6 +28,24 @@ const getUser = async (email) => {
         return null;
     } catch (error) {
         console.error("Error getting user:", error);
+        return null;
+    }
+};
+
+
+// Function to find a userId
+const getUserId = async (email) => {
+    try {
+        const response = await axios.get(`${rootUrl}/users.json`);
+        const users = response.data;
+        for (const key in users) {
+            if (users[key].email === email) {
+                return key;
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error("Error getting Id:", error);
         return null;
     }
 };
@@ -51,19 +71,4 @@ const updateUser = async (userId, updatedUser) => {
 };
 
 
-//Adding auth
-
-export const signupUser = async(email, password) => {
-    const resp = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${ API_KEY }`,
-        {
-            email,
-            password,
-            returnSecureToken: true,
-        }
-    );
-    return resp.data.idToken;
-}
-
-
-
-export { storeUser, getUser, getAllUsers, updateUser };
+export { storeUser, getUser, getAllUsers, getUserId, updateUser };

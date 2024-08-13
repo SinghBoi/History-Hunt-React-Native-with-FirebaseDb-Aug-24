@@ -5,7 +5,7 @@ import Input from './Input'
 import Button from './Button'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../store/userContext'
-import { getUser } from '../util/http'
+import { getUser, storeUser } from '../util/http'
 
 const SignUpForm = () => {
   const [inputValue, setInputValue] = useState({ email: "", fullName: "", password: "" });
@@ -76,7 +76,8 @@ const SignUpForm = () => {
       password: password,
     };
 
-    userContext.addUser(newUser);
+    const id = await storeUser(newUser)
+    userContext.addUser({id, ...newUser});
     Alert.alert('Success', 'User created successfully');
     navigation.navigate('LoginScreen');
   };
