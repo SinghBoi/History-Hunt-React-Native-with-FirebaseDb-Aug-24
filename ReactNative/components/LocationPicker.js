@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 
 
-const LocationPicker = ({navigation}) => {
-    const [pickedLocation, setPickedLocation] = useState(null)   
+const LocationPicker = ({pickedLocation, setPickedLocation}) => {
 
     const initialRegion = {
         latitude: 57.70887,
@@ -16,8 +15,7 @@ const LocationPicker = ({navigation}) => {
     const locateUser = (event) => {      
         const { latitude, longitude } = event.nativeEvent.coordinate;
         console.log(latitude, longitude)
-        setPickedLocation({ latitude, longitude })
-        navigation.navigate('StartScreen', pickedLocation)
+      setPickedLocation({ latitude, longitude })
     }
   return (
     <View style={styles.container}>

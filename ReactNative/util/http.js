@@ -82,4 +82,13 @@ const createHunt = async (hunt) => {
     }
 };
 
+// Function to update a user
+const updateHunt = async (huntId, updatedHunt) => {
+    try {
+        await axios.patch(`${rootUrl}/hunts/${huntId}.json`, updatedHunt);
+    } catch (error) {
+        console.error("Error updating user:", error);
+    }
+};
+
 export { storeUser, getUser, getAllUsers, getUserId, updateUser, createHunt };

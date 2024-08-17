@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     borderColor: '#B3B1B3',
     borderRadius: 5,
     paddingHorizontal: 10, 
+    fontSize: 20,
   },
   textInput: {
     flex: 1,
