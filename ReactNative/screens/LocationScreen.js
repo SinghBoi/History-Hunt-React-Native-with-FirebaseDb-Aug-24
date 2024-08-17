@@ -3,8 +3,10 @@ import React, { useState } from 'react'
 import LocationPicker from '../components/LocationPicker'
 import PinkText from '../components/PinkText'
 
-const LocationScreen = ({ navigation, updatedUser, hunt }) => {  
-  const [pickedLocation, setPickedLocation] = useState(null)   
+const LocationScreen = ({ navigation, route, updatedUser, hunt }) => {  
+  const [pickedLocation, setPickedLocation] = useState(null) 
+   const { userEmail } = route.params;
+  console.log("email from location ", userEmail)
 
   const onPressHandler = () => {
     console.log("You clicked create hunt")
