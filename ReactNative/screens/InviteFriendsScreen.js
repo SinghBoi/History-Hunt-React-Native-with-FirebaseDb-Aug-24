@@ -1,28 +1,29 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React, { useContext } from 'react'
+import { View, Text, StyleSheet, Alert } from 'react-native'
+import React, { useContext, useState } from 'react'
 import SearchFriend from '../components/SearchFriend'
 import Button from '../components/Button'
-import UserList from '../components/UserList'
-import { UserContext } from '../store/userContext'
 
 const InviteFriendsScreen = ({ navigation, huntId }) => {
-  const onPressHandler = async() => {
-    // Need to fix it with the final hunt creation
-      // Update the user's imageUri field
-            const updatedUser = { ...user, plannedHunt:  huntId};
-            console.log("updated user------------------", updatedUser)
-          //  await updateUser(userId, updatedUser) ///this one need to move in navigation screen
-      navigation.navigate('location', updatedUser)
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const onPressHandler = async () => {
+    if (selectedUser) {
+      const userEmail = selectedUser.email;
+      console.log("user email from invit screen", userEmail)
+      navigation.navigate('location', { userEmail });
+    } else {
+      Alert.alert('Error', 'Please select a friend to invite for the hunt');
     }
-  return (
-    <View style={styles.container}>
-          <Text style={styles.text}>Invite Friends</Text>
-          <SearchFriend />
-          <UserList />
-          <Button onPressHandler={onPressHandler}>INVITE</Button>
-    </View>
-  )
-}
+  }
+
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>Invite Friends</Text>
+        <SearchFriend selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
+        <Button onPressHandler={onPressHandler}>INVITE</Button>
+      </View>
+    )
+  }
 
 const styles = StyleSheet.create({
   container: {

@@ -20,13 +20,15 @@ export default function App() {
       <UserContextProvider >
         <NavigationContainer>
           <Stack.Navigator>
+            <Stack.Screen name="createHunt" component={CreateHunt} options={{ headerShown: true,headerTitle: '',
+              headerBackTitleVisible: false }}/>
             <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false}}/>
-            <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: false}}/> 
-            <Stack.Screen name="inviteFriend" component={InviteFriendScreen} options={{ headerShown: true,headerTitle: '',              // Removes the title
-              headerBackTitleVisible: false }} />
+            <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: true}}/> 
+            <Stack.Screen name="inviteFriend" component={InviteFriendScreen} options={{ headerShown: true,headerTitle: '',
+              headerBackTitleVisible: false,
+            }} />
             <Stack.Screen name='SignUpScreen' component={SignUpScreen} options={{ headerShown: false}}/>  
             <Stack.Screen name='StartScreen' component={StartScreen} options={{ headerShown: false}}/>
-            <Stack.Screen name="createHunt" component={CreateHunt} options={{ headerShown: true}}/>
             <Stack.Screen name="ConfirmHunt" component={ConfirmHuntScreen} options={{ headerShown: true}}/>
           </Stack.Navigator>
         </NavigationContainer>
