@@ -10,8 +10,8 @@ const StartScreen = ({ route, navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <User user={user} />
-      <ActiveHunts />
-      <PlannedHunts />
+      <ActiveHunts user={user}/>
+      <PlannedHunts user={user}/>
       <Text style={styles.createHuntText} onPress={()=> navigation.navigate('createHunt')}> Create a Hunt</Text>
       <Medals />
       </ScrollView>

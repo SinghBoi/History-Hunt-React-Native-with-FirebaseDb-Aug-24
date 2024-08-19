@@ -3,7 +3,7 @@ import React from 'react'
 import PinkText from './PinkText'
 import Hunt from './Hunt'
 
-const PlannedHunts = () => {
+const PlannedHunts = ({user}) => {
   return (
     <View style={styles.container}>
       <PinkText style={styles.text}> Planned Hunts </PinkText>
