@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from 'react';
+import { createContext, useEffect, useReducer, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid'
 import * as http  from '../util/http';
 
@@ -30,6 +30,7 @@ const userReducer = (state, action) => {
 
 const UserContextProvider = ({ children }) => {
     const [users, dispatch] = useReducer(userReducer, []);
+    const [loggedInUser, setLoggedInUser] = useState(null);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -43,10 +44,12 @@ const UserContextProvider = ({ children }) => {
 
         fetchUsers();
     }, []);
+
     
     const addUser = async (user) => {
         dispatch({ type: "ADD", payload: user });
     };
+
 
     const findUser = async (email) => {
         return await http.getUser(email);
@@ -58,6 +61,8 @@ const UserContextProvider = ({ children }) => {
 
     const value = {
         users,
+        loggedInUser,
+        setLoggedInUser,
         addUser,
         findUser,
         updateUser

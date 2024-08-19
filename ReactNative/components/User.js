@@ -57,7 +57,7 @@ const editHandler = async () => {
         // Extract the URI of the selected image from the assets array
         const selectedImageUri = selectedImage.assets.length > 0 ? selectedImage.assets[0].uri : null;
 
-        //
+       
         if (selectedImageUri) {
             // Upload image to Firebase Storage
             const response = await fetch(selectedImageUri);
@@ -71,9 +71,7 @@ const editHandler = async () => {
             // Update the user's imageUri field
             const updatedUser = { ...user, imageUri: downloadURL };
             userContext.updateUser(userId, updatedUser);
-            console.log("updated user------------------", updatedUser)
             await updateUser(userId, updatedUser)
-            console.log("edithandler", userId)
             setImageUri(downloadURL);
         }
     } catch (error) {

@@ -1,43 +1,52 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import LocationPicker from '../components/LocationPicker'
 import PinkText from '../components/PinkText'
 import { UserContext } from '../store/userContext'
 import ImageComp from '../components/ImageComp'
+import { HuntContext } from '../store/huntContext'
+import * as http from '../util/http'
 
-const LocationScreen = ({ navigation, route, hunt }) => {
-  const [pickedLocation, setPickedLocation] = useState(null)
-  const [user, setUser] = useState(null)
+const LocationScreen = ({ navigation, route }) => {
+  const [location, setLocation] = useState(null);
+  const [userId, setUserId] = useState(null);
   const userContext = useContext(UserContext)
-  const { userEmail } = route.params;
-
+  const huntContext = useContext(HuntContext)
+  const { duration, huntName, selectedImageUri, userEmail } = route.params; 
+  const { loggedInUser } = useContext(UserContext);
   console.log("userEmail from location", userEmail)
- 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userDB = await userContext.findUser(userEmail);
-        console.log("userDB", userDB)
-        setUser(userDB)
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      }
-    };
-    fetchUser();
-  }, []);
-  
 
-  const onPressHandler = () => {
-    console.log("You clicked create hunt")
-  }
-  if (user) {
+
+  const onPressHandler = async() => {
+    if (location) {
+      const newHunt = {
+        duration,
+        huntName,
+        huntImageUri: selectedImageUri,
+        invitee: userEmail, 
+        location,
+        creatorId: loggedInUser.email, 
+      };
+
+    const id = await http.createHunt(newHunt)
+      huntContext.addHunt({ id, ...newHunt });
+      Alert.alert("Hunt created successfully")
+      const user = loggedInUser
+
+      navigation.navigate('StartScreen', {user});
+    } else {
+      Alert.alert('Error', 'Please select a location for the hunt');
+    }
+  };
+
+  if (loggedInUser) {
     return (
       <View style={styles.container}>
-        <LocationPicker pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} />
+        <LocationPicker location={location} setLocation={setLocation} />
         <View style={styles.imageContainer}>
           <View>
-            <ImageComp url={user.imageUri} style={styles.image} />
-            <PinkText >{user.fullName} </PinkText>
+            <ImageComp url={loggedInUser.imageUri} style={styles.image} />
+            <PinkText >{loggedInUser.fullName} </PinkText>
           </View>
           <View>
             <TouchableOpacity onPress={onPressHandler}>

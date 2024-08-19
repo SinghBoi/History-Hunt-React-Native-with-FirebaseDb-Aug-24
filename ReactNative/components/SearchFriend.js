@@ -6,7 +6,7 @@ import { UserContext } from '../store/userContext';
 
 const SearchFriend = ({selectedUser, setSelectedUser}) => {
   const [searchText, setSearchText] = useState("");
-    const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const { users } = useContext(UserContext);
 
   const inputHandler = (text) => {
@@ -23,12 +23,6 @@ const SearchFriend = ({selectedUser, setSelectedUser}) => {
       setSuggestions(filteredUsers);
     }
   };
-
-
-  const selectTextHandle = (item) => {
-    console.log("email from suggestion click",item.email)
-    setSelectedUser(item)
-  }
 
     const onSelectSuggestion = (item) => {
       setSearchText(item.fullName);
