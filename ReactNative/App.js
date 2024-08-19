@@ -20,8 +20,8 @@ export default function App() {
       <UserContextProvider >
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: false}}/>
-            <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false}}/> 
+            <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false}}/>
+            <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: false}}/> 
             <Stack.Screen name="inviteFriend" component={InviteFriendScreen} options={{ headerShown: true,headerTitle: '',              // Removes the title
               headerBackTitleVisible: false }} />
             <Stack.Screen name='SignUpScreen' component={SignUpScreen} options={{ headerShown: false}}/>  

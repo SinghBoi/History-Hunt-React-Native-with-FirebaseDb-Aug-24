@@ -1,20 +1,56 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import React, { useState } from 'react'
 import Input from './Input'
 import Button from './Button'
 import PinkText from './PinkText'
+import * as ImagePicker from 'expo-image-picker'
 
 const CreateHunt = ({ navigation }) => {
-  const inputHandler = () => {
-    // Add your logic for handling the input here
+  const [duration, setDuration] = useState('')
+  const [huntName, setHuntName] = useState('')
+  const [selectedImageUri, setSelectedImageUri] = useState(null)
+
+  const inputHandler = (inputType, value) => {
+    if (inputType === 'duration') {
+      setDuration(value)
+    } else if (inputType === 'huntName') {
+      setHuntName(value)
+    }
   }
 
-  const onPressHandler = async () => {
-    navigation.navigate('inviteFriend')  
+  const onPressHandler = () => {
+    if (duration.trim() === '' || huntName.trim() === '') {
+      Alert.alert('Validation Error', 'Please fill in all required fields.')
+      return
+    }
+    navigation.navigate('inviteFriend', { duration, huntName, selectedImageUri })  
   }
 
-  const addImageHandler = () => {
-    // Add your logic for handling the image addition here
+  const addImageHandler = async () => {
+    try {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+            alert('Permission to access gallery was denied');
+            return;
+        }
+        
+        const selectedImage = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+
+        if (selectedImage.canceled) {
+            console.log('Image selection canceled');
+            return;
+        }
+
+        const imageUri = selectedImage.assets.length > 0 ? selectedImage.assets[0].uri : null;
+        setSelectedImageUri(imageUri);
+    } catch (error) {
+        console.error('Error selecting image:', error);
+    }
   }
 
   return (
@@ -25,20 +61,20 @@ const CreateHunt = ({ navigation }) => {
           <PinkText style={styles.textColor}> How long should it be? </PinkText>
           <Input
             style={styles.textInput}
-              textInputConfig={{
+            textInputConfig={{
                 autoCapitalize: "none",
                 autoCorrect: false,
-                onChangeText: inputHandler,
-                placeholder: "3 hours? 2days? You pick",
+                onChangeText: (value) => inputHandler('duration', value),
+                placeholder: "3 hours? 2 days? You pick",
             }}
           />
           <PinkText style={styles.textColor}> What do you want to call your hunt? </PinkText>
           <Input
             style={styles.textInput}
-              textInputConfig={{
+            textInputConfig={{
                 autoCapitalize: "none",
                 autoCorrect: false,
-                onChangeText: inputHandler,
+                onChangeText: (value) => inputHandler('huntName', value),
                 placeholder: "Name",
             }}
           />

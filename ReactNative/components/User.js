@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, { useContext, useState,useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import ImageComp from './ImageComp'
 import { useNavigation } from '@react-navigation/native';
