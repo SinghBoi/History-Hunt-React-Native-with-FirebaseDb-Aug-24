@@ -22,7 +22,7 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen name="createHunt" component={CreateHunt} options={{ headerShown: true,headerTitle: '',
               headerBackTitleVisible: false }}/>
-            <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: false}}/>
+            <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: true}}/>
             <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false}}/> 
             <Stack.Screen name="inviteFriend" component={InviteFriendScreen} options={{ headerShown: true,headerTitle: '',
               headerBackTitleVisible: false,

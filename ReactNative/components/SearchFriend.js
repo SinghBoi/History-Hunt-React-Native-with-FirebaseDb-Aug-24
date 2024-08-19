@@ -24,36 +24,39 @@ const SearchFriend = ({selectedUser, setSelectedUser}) => {
     }
   };
 
-  const onPressHandler = () => {
-  };
 
   const selectTextHandle = (item) => {
+    console.log("email from suggestion click",item.email)
     setSelectedUser(item)
   }
 
+    const onSelectSuggestion = (item) => {
+      setSearchText(item.fullName);
+      console.log("email from suggestion click",item.email)
+      setSelectedUser(item)
+      setSuggestions([]); 
+    };
+
   const renderSuggestionItem = ({ item }) => (
     <TouchableOpacity onPress={() => onSelectSuggestion(item)}>
-      <Text style={styles.suggestedText}  onPress={() => selectTextHandle(item)}>{item.fullName}</Text>
+      <Text style={styles.suggestedText} >{item.fullName}</Text>
     </TouchableOpacity>
   );
 
-  const onSelectSuggestion = (user) => {
-    setSearchText(user.fullName);
-    setSuggestions([]); 
-  };
 
     const data = Object.keys(users).map(key => ({
         id: key,
         ...users[key]
     }));
   
-  const userPressHandler = (item) => {
+  const onPressHandler = (item) => {
+    console.log("user from icon click",item.fullName)
     setSelectedUser(item)
   }
 
   const renderItem = ({ item }) => (
     <View style={styles.userItem}>
-      <Icon icon={selectedUser && selectedUser.id === item.id ? 'check' : 'user-large'} size={28} color='white' style={styles.userIcon} name={item.fullName} onPressHandler={() => userPressHandler(item)} />
+      <Icon icon={selectedUser && selectedUser.id === item.id ? 'check' : 'user-large'} size={28} color='white' style={styles.userIcon} name={item.fullName} onPressHandler={() => onPressHandler(item)} />
     </View>
   );
 
@@ -70,7 +73,7 @@ const SearchFriend = ({selectedUser, setSelectedUser}) => {
               autoCapitalize: "none"
             }}
           />
-          <Icon icon="magnifying-glass" size={20} color="#B3B1B3" onPressHandler={onPressHandler} style={styles.icon}/>
+          <Icon icon="magnifying-glass" size={20} color="#B3B1B3"  style={styles.icon}/>
         </View>
         {suggestions.length > 0 && (
           <FlatList

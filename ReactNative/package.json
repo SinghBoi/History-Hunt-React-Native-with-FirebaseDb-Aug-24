@@ -9,7 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/metro-runtime": "~3.2.1",
+    "@expo/metro-runtime": "~3.2.3",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "axios": "^1.7.2",
