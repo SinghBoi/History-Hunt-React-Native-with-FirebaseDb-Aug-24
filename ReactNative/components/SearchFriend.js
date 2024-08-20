@@ -12,11 +12,9 @@ const SearchFriend = ({ selectedUser, setSelectedUser }) => {
   const inputHandler = (text) => {
     setSearchText(text);
 
-    // clear the suggestions if text is erased
     if (text.trim() === "") {
       setSuggestions([]);
     } else {
-      // Filter the entered text from users db excluding the loggedIn user
       const filteredUsers = Object.values(users).filter(user =>
         user.fullName.toLowerCase().startsWith(text.toLowerCase()) && user.email !== loggedInUser.email
       );
@@ -26,8 +24,18 @@ const SearchFriend = ({ selectedUser, setSelectedUser }) => {
 
   const onSelectSuggestion = (item) => {
     setSearchText(item.fullName); 
-    setSelectedUser(item); 
+    toggleUserSelection(item); 
     setSuggestions([]); 
+  };
+
+  const toggleUserSelection = (item) => {
+    const isSelected = selectedUser.some(user => user.id === item.id);
+
+    if (isSelected) {
+      setSelectedUser(selectedUser.filter(user => user.id !== item.id));
+    } else {
+      setSelectedUser([...selectedUser, item]);
+    }
   };
 
   const renderSuggestionItem = ({ item }) => (
@@ -36,25 +44,26 @@ const SearchFriend = ({ selectedUser, setSelectedUser }) => {
     </TouchableOpacity>
   );
 
-  // Filter loggedIn user from the users list 
-  const data = Object.values(users).filter(user => user.email !== loggedInUser.email);
-
   const onPressHandler = (item) => {
-    setSelectedUser(item); 
-  }
+    toggleUserSelection(item);
+  };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.userItem}>
-      <Icon 
-        icon={selectedUser && selectedUser.id === item.id ? 'check' : 'user-large'} 
-        size={28} 
-        color='white' 
-        style={styles.userIcon} 
-        name={item.fullName} 
-        onPressHandler={() => onPressHandler(item)} 
-      />
-    </View>
-  );
+  const renderItem = ({ item }) => {
+    const isSelected = selectedUser.some(user => user.id === item.id);
+
+    return (
+      <View style={[styles.userItem, isSelected && styles.selectedItem]}>
+        <Icon 
+          icon={isSelected ? 'check' : 'user-large'} 
+          size={28} 
+          color='white' 
+          style={styles.userIcon} 
+          name={item.fullName} 
+          onPressHandler={() => onPressHandler(item)} 
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -82,7 +91,7 @@ const SearchFriend = ({ selectedUser, setSelectedUser }) => {
       <View style={styles.listContainer}>
         <FlatList
           horizontal={true} 
-          data={data}
+          data={Object.values(users).filter(user => user.email !== loggedInUser.email)}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           contentContainerStyle={styles.flatListContainer} 
@@ -140,10 +149,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'flex-start',
   },
-  userName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 8,
+  selectedItem: {
+    backgroundColor: '#4CAF50',
   },
   userIcon: {
     borderWidth: 1,

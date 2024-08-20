@@ -1,30 +1,28 @@
-import { View, Text, StyleSheet, Alert } from 'react-native'
-import React, { useContext, useState } from 'react'
-import SearchFriend from '../components/SearchFriend'
-import Button from '../components/Button'
+import { View, Text, StyleSheet, Alert } from 'react-native';
+import React, { useState } from 'react';
+import SearchFriend from '../components/SearchFriend';
+import Button from '../components/Button';
 
 const InviteFriendsScreen = ({ navigation, route }) => {
   const [selectedUser, setSelectedUser] = useState([]);
   const { duration, huntName, selectedImageUri } = route.params; 
 
   const onPressHandler = async () => {
-    if (selectedUser) {
-      const userEmail = selectedUser.email;
-      console.log("user email from invit screen", userEmail)
+    if (selectedUser.length > 0) {
       navigation.navigate('location', { duration, huntName, selectedImageUri, selectedUser });
     } else {
-      Alert.alert('Error', 'Please select a friend to invite for the hunt');
+      Alert.alert('Error', 'Please select at least one friend to invite for the hunt');
     }
   }
 
-    return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Invite Friends</Text>
-        <SearchFriend selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
-        <Button onPressHandler={onPressHandler}>INVITE</Button>
-      </View>
-    )
-  }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Invite Friends</Text>
+      <SearchFriend selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
+      <Button onPressHandler={onPressHandler}>INVITE</Button>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -34,10 +32,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 36,
     textAlign: 'center',
-    fontWeight: '700'
+    fontWeight: '700',
   }
-})
+});
 
-
-
-export default InviteFriendsScreen
+export default InviteFriendsScreen;

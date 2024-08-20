@@ -1,16 +1,14 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
-import LocationPicker from '../components/LocationPicker'
-import PinkText from '../components/PinkText'
-import { UserContext } from '../store/userContext'
-import ImageComp from '../components/ImageComp'
-import { HuntContext } from '../store/huntContext'
-import * as http from '../util/http'
-import PlannedHunts from '../components/PlannedHunts'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import LocationPicker from '../components/LocationPicker';
+import PinkText from '../components/PinkText';
+import { UserContext } from '../store/userContext';
+import ImageComp from '../components/ImageComp';
+import { HuntContext } from '../store/huntContext';
+import * as http from '../util/http';
 
 const LocationScreen = ({ navigation, route }) => {
   const [location, setLocation] = useState(null);
-  const [inviteeId, setInviteeId] = useState(null);
   const [loggedInUserId, setLoggedInUserId] = useState(null);
 
   const userContext = useContext(UserContext);
@@ -18,69 +16,67 @@ const LocationScreen = ({ navigation, route }) => {
   const { duration, huntName, selectedImageUri, selectedUser } = route.params; 
   const { loggedInUser } = userContext;
 
-  // Fetch user IDs for both the invitee and the logged-in user
   useEffect(() => {
-    const fetchUserIds = async () => {
+    const fetchLoggedInUserId = async () => {
       try {
-        const fetchedInviteeId = await http.getUserId(selectedUser.email); 
-        setInviteeId(fetchedInviteeId);
-
         const fetchedLoggedInUserId = await http.getUserId(loggedInUser.email); 
         setLoggedInUserId(fetchedLoggedInUserId);
       } catch (error) {
-        console.error("Error fetching user IDs:", error);
+        console.error("Error fetching logged-in user ID:", error);
       }
     };
 
-    fetchUserIds();
-  }, [selectedUser, loggedInUser.email]);
+    fetchLoggedInUserId();
+  }, [loggedInUser.email]);
 
   const onPressHandler = async () => {
-      if (!inviteeId || !loggedInUserId) {
-          Alert.alert('Error', 'User IDs not properly fetched');
-          return;
-      }
+    if (!loggedInUserId) {
+      Alert.alert('Error', 'Logged-in user ID not properly fetched');
+      return;
+    }
 
-      if (location) {
-          const newHunt = {
-              duration,
-              huntName,
-              huntImageUri: selectedImageUri,
-              invitee: selectedUser.email, 
-              location,
-              createdBy: loggedInUser.email, 
+    if (location) {
+      const newHunt = {
+        duration,
+        huntName,
+        huntImageUri: selectedImageUri,
+        invitees: selectedUser.map(user => user.email), 
+        location,
+        createdBy: loggedInUser.email,
+      };
+
+      try {
+        const huntId = await http.createHunt(newHunt);
+        huntContext.addHunt({ id: huntId, ...newHunt });
+        Alert.alert("Hunt created successfully");
+
+        // Update each invitee's active hunts
+        for (let user of selectedUser) {
+          const inviteeId = await http.getUserId(user.email); 
+          const updatedInvitee = {
+            ...user,
+            activeHunts: user.activeHunts ? [...user.activeHunts, { huntName }] : [{ huntName }],
           };
+          await http.updateUser(inviteeId, updatedInvitee);
+        }
 
-          try {
-              const huntId = await http.createHunt(newHunt);
-              huntContext.addHunt({ id: huntId, ...newHunt });
-              Alert.alert("Hunt created successfully");
+        // Update the loggedInUser's planned hunts 
+        const updatedLoggedInUser = {
+          ...loggedInUser, 
+          PlannedHunts: loggedInUser.PlannedHunts ? [...loggedInUser.PlannedHunts, { huntName }] : [{ huntName }],
+        };
+        await http.updateUser(loggedInUserId, updatedLoggedInUser);
 
-              // Update the invitee's active hunts field
-              const updatedInvitee = {
-                  ...selectedUser, 
-                  activeHunts: selectedUser.activeHunts ? [...selectedUser.activeHunts, { huntName }] : [{ huntName }],
-              };
-              await http.updateUser(inviteeId, updatedInvitee);
-
-              // Update the logged-in user's planned hunts field
-              const updatedLoggedInUser = {
-                  ...loggedInUser, 
-                  PlannedHunts: loggedInUser.PlannedHunts ? [...loggedInUser.PlannedHunts, { huntName }] : [{ huntName }],
-              };
-              await http.updateUser(loggedInUserId, updatedLoggedInUser);
-
-              // Navigate to the StartScreen
-              navigation.navigate('StartScreen', { user: loggedInUser });
-          } catch (error) {
-              console.error("Error during hunt creation:", error);
-              Alert.alert('Error', 'Failed to create and update hunt information');
-          }
-      } else {
-          Alert.alert('Error', 'Please select a location for the hunt');
+        // Navigate to the StartScreen
+        navigation.navigate('StartScreen', { user: loggedInUser });
+      } catch (error) {
+        console.error("Error during hunt creation:", error);
+        Alert.alert('Error', 'Failed to create and update hunt information');
       }
+    } else {
+      Alert.alert('Error', 'Please select a location for the hunt');
+    }
   };
-
 
   if (loggedInUser) {
     return (
@@ -102,7 +98,7 @@ const LocationScreen = ({ navigation, route }) => {
     );
   }
 
-  return null; // Render null or a loading indicator if loggedInUser is not available
+  return null; 
 };
 
 const styles = StyleSheet.create({
