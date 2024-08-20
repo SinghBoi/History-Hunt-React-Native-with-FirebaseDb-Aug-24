@@ -4,14 +4,14 @@ import SearchFriend from '../components/SearchFriend'
 import Button from '../components/Button'
 
 const InviteFriendsScreen = ({ navigation, route }) => {
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState([]);
   const { duration, huntName, selectedImageUri } = route.params; 
 
   const onPressHandler = async () => {
     if (selectedUser) {
       const userEmail = selectedUser.email;
       console.log("user email from invit screen", userEmail)
-      navigation.navigate('location', { duration, huntName, selectedImageUri, userEmail });
+      navigation.navigate('location', { duration, huntName, selectedImageUri, selectedUser });
     } else {
       Alert.alert('Error', 'Please select a friend to invite for the hunt');
     }

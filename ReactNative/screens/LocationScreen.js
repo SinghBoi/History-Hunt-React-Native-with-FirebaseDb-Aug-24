@@ -6,6 +6,7 @@ import { UserContext } from '../store/userContext'
 import ImageComp from '../components/ImageComp'
 import { HuntContext } from '../store/huntContext'
 import * as http from '../util/http'
+import PlannedHunts from '../components/PlannedHunts'
 
 const LocationScreen = ({ navigation, route }) => {
   const [location, setLocation] = useState(null);
@@ -14,14 +15,14 @@ const LocationScreen = ({ navigation, route }) => {
 
   const userContext = useContext(UserContext);
   const huntContext = useContext(HuntContext);
-  const { duration, huntName, selectedImageUri, userEmail } = route.params; 
+  const { duration, huntName, selectedImageUri, selectedUser } = route.params; 
   const { loggedInUser } = userContext;
 
   // Fetch user IDs for both the invitee and the logged-in user
   useEffect(() => {
     const fetchUserIds = async () => {
       try {
-        const fetchedInviteeId = await http.getUserId(userEmail); 
+        const fetchedInviteeId = await http.getUserId(selectedUser.email); 
         setInviteeId(fetchedInviteeId);
 
         const fetchedLoggedInUserId = await http.getUserId(loggedInUser.email); 
@@ -32,47 +33,54 @@ const LocationScreen = ({ navigation, route }) => {
     };
 
     fetchUserIds();
-  }, [userEmail, loggedInUser.email]);
+  }, [selectedUser, loggedInUser.email]);
 
   const onPressHandler = async () => {
-    if (location) {
-      const newHunt = {
-        duration,
-        huntName,
-        huntImageUri: selectedImageUri,
-        invitee: userEmail, 
-        location,
-        creatorId: loggedInUser.email, 
-      };
-
-      // Create new hunt
-      const huntId = await http.createHunt(newHunt);
-      huntContext.addHunt({ id: huntId, ...newHunt });
-      Alert.alert("Hunt created successfully");
-
-      // Update the invitee's active hunts field
-      if (inviteeId) {
-        const updatedInvitee = { activeHunts: huntName };
-        await http.updateUser(inviteeId, updatedInvitee)
-      }
-      else {
-        console.error("Invitee ID not available to update user");
+      if (!inviteeId || !loggedInUserId) {
+          Alert.alert('Error', 'User IDs not properly fetched');
+          return;
       }
 
-      // Update the logged-in user's active hunts field
-      if (loggedInUserId) {
-        const updatedLoggedInUser = { plannedHunts: huntName };
-        await http.updateUser(loggedInUserId, updatedLoggedInUser)
+      if (location) {
+          const newHunt = {
+              duration,
+              huntName,
+              huntImageUri: selectedImageUri,
+              invitee: selectedUser.email, 
+              location,
+              createdBy: loggedInUser.email, 
+          };
+
+          try {
+              const huntId = await http.createHunt(newHunt);
+              huntContext.addHunt({ id: huntId, ...newHunt });
+              Alert.alert("Hunt created successfully");
+
+              // Update the invitee's active hunts field
+              const updatedInvitee = {
+                  ...selectedUser, 
+                  activeHunts: selectedUser.activeHunts ? [...selectedUser.activeHunts, { huntName }] : [{ huntName }],
+              };
+              await http.updateUser(inviteeId, updatedInvitee);
+
+              // Update the logged-in user's planned hunts field
+              const updatedLoggedInUser = {
+                  ...loggedInUser, 
+                  PlannedHunts: loggedInUser.PlannedHunts ? [...loggedInUser.PlannedHunts, { huntName }] : [{ huntName }],
+              };
+              await http.updateUser(loggedInUserId, updatedLoggedInUser);
+
+              // Navigate to the StartScreen
+              navigation.navigate('StartScreen', { user: loggedInUser });
+          } catch (error) {
+              console.error("Error during hunt creation:", error);
+              Alert.alert('Error', 'Failed to create and update hunt information');
+          }
       } else {
-        console.error("Logged-in user ID not available to update user");
+          Alert.alert('Error', 'Please select a location for the hunt');
       }
-
-      // Navigate to the StartScreen
-      navigation.navigate('StartScreen', { user: loggedInUser });
-    } else {
-      Alert.alert('Error', 'Please select a location for the hunt');
-    }
   };
+
 
   if (loggedInUser) {
     return (
