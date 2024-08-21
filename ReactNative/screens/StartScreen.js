@@ -8,10 +8,21 @@ import Medals from '../components/Medals';
 const StartScreen = ({ route, navigation }) => {
   const { user } = route.params;
 
+    // Handler for planned hunts
+  const onPlannedHuntPress = (hunt) => {
+    console.log("Planned Hunt clicked");
+  };
+
+  // Handler for active hunts
+  const onActiveHuntPress = (hunt) => {
+    navigation.navigate("ConfirmHunt", {hunt});
+  };
+
+
   const data = [
     { key: 'user', component: <User user={user} /> },
-    { key: 'activeHunts', component: <ActiveHunts user={user} /> },
-    { key: 'plannedHunts', component: <PlannedHunts user={user} /> },
+    { key: 'activeHunts', component: <ActiveHunts user={user} onPressHandler={onActiveHuntPress}/> },
+    { key: 'plannedHunts', component: <PlannedHunts user={user} onPressHandler={onPlannedHuntPress}/> },
     {
       key: 'createHunt',
       component: (

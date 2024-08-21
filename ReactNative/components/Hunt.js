@@ -4,8 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import ImageComp from './ImageComp'
 import { getHunt } from '../util/http';
 
-const Hunt = ({ huntName, onPressHandler }) => {
-  const [hunt, setHunt] = useState(null)
+const Hunt = ({hunt, setHunt, huntName, onPressHandler }) => {
 
   useEffect(() => {
     const fetchHunt = async () => {
@@ -18,8 +17,9 @@ const Hunt = ({ huntName, onPressHandler }) => {
     };
     fetchHunt();
   }, [huntName]);
+
   
-  const navigation = useNavigation()
+  
   if (hunt) {
     return (
       <View style={styles.container}>

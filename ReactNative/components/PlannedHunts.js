@@ -1,14 +1,13 @@
 import { View, StyleSheet, FlatList } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import PinkText from './PinkText';
 import Hunt from './Hunt';
 
-const PlannedHunts = ({ user }) => {
+const PlannedHunts = ({ user, onPressHandler }) => {
+  const [hunt, setHunt] = useState(null)
+
   const plannedHunts = user.PlannedHunts;
 
-  const onPressHandler = () => {
-    console.log("you clicked planned hut")
-  }
   if (plannedHunts) {
     return (
       <View style={styles.container}>
@@ -16,7 +15,7 @@ const PlannedHunts = ({ user }) => {
           <FlatList
             data={plannedHunts}
             keyExtractor={(item, index) => `${ item.huntName }-${ index }`}
-            renderItem={({ item }) => <Hunt huntName={item.huntName} onPressHandler={onPressHandler} />}
+            renderItem={({ item }) => <Hunt hunt={hunt} setHunt={setHunt} huntName={item.huntName} onPressHandler={() => onPressHandler(hunt)} />}
           />
       </View>
     );

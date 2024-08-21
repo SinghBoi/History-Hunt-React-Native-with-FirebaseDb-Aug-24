@@ -1,11 +1,14 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import PinkText from '../components/PinkText'
 import MapView, { Marker } from 'react-native-maps'
 import Button from '../components/Button'
 
-const ConfirmHuntScreen = ({ hunt }) => {
-    const [pickedLocation, setPickedLocation] = useState(null)   
+const ConfirmHuntScreen = ({ route }) => {
+    const [pickedLocation, setPickedLocation] = useState(null)  
+    const {hunt} =route.params
+
+    console.log("from confirm hunt", hunt)
 
     const initialRegion = {
         latitude: 57.70887,
@@ -26,9 +29,9 @@ const ConfirmHuntScreen = ({ hunt }) => {
     }
   return (
     <View style={styles.container}>
-          <PinkText> You Picked: </PinkText>
-          <Text style={styles.huntText}>Hunt name here</Text>
-          <PinkText> Here is the route you will be taking:</PinkText>
+          <PinkText style={styles.textColor}> You Picked: </PinkText>
+          <Text style={styles.huntText}>{hunt.huntName}</Text>
+          <PinkText style={styles.textColor}> Here is the route you will be taking:</PinkText>
           {/* Here we need route from hun.location to current location */}
            <MapView
               style={styles.mapContainer}
@@ -46,7 +49,7 @@ const ConfirmHuntScreen = ({ hunt }) => {
           <View style={styles.routeContainer}>
               <Text style={styles.routeText}>Start location</Text>
               <Text style={styles.routeText}>Destination</Text>
-              <PinkText> This should take approximately:</PinkText>
+              <PinkText style={styles.textColor}> This should take approximately:</PinkText>
               <Text style={styles.totalTime}>Here route time</Text>
           </View>
           <Button style={styles.button} onPressHandler={onPressHandler}>CONFIRM</Button>
@@ -64,6 +67,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         paddingBottom: 10,
+    },
+    textColor: {
+        color: '#A20FDF',
+        fontWeight: 'bold',
+        textAlign: 'center'
     },
     mapContainer: {
         flex: 1,
