@@ -1,7 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window'); 
+const medalSize = width * 0.15; 
 
 const Medals = () => {
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -27,7 +31,7 @@ const Medals = () => {
         </View>
       </View>
     </View>
-  );
+  );fire
 };
 
 const styles = StyleSheet.create({
@@ -65,10 +69,10 @@ const styles = StyleSheet.create({
     width: '100%', 
   },
   medal: {
-    height: 60,
-    width: 60,
+    height: medalSize,
+    width: medalSize,
     backgroundColor: 'gray',
-    borderRadius: 30, 
+    borderRadius: medalSize/2, 
   },
 });
 

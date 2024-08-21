@@ -82,13 +82,22 @@ const createHunt = async (hunt) => {
     }
 };
 
-// Function to update a hunt
-const updateHunt = async (huntId, updatedHunt) => {
+
+// Function to get a hunt with hunt Name
+const getHunt = async (huntName) => {
     try {
-        await axios.patch(`${rootUrl}/hunts/${huntId}.json`, updatedHunt);
+        const response = await axios.get(`${rootUrl}/hunts.json`);
+        const hunts = response.data;
+        for (const key in hunts) {
+            if (hunts[key].huntName === huntName) {
+                return hunts[key];
+            }
+        }
+        return null;
     } catch (error) {
-        console.error("Error updating hunt:", error);
+        console.error("Error getting hunt:", error);
+        return null;
     }
 };
 
-export { storeUser, getUser, getAllUsers, getUserId, updateUser, createHunt };
+export { storeUser, getUser, getAllUsers, getUserId, updateUser, createHunt, getHunt };
