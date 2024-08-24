@@ -21,7 +21,7 @@ const CreateHunt = ({ navigation }) => {
   };
 
   const onPressHandler = () => {
-    if (duration.trim() === '' || huntName.trim() === '') {
+    if (duration.trim() === '' || huntName.trim() === '' || selectedImageUri === null) {
       Alert.alert('Validation Error', 'Please fill in all required fields.');
       return;
     }
@@ -30,13 +30,15 @@ const CreateHunt = ({ navigation }) => {
 
   const addImageHandler = async () => {
     try {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      // Request camera permissions
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert('Permission Denied', 'Permission to access gallery was denied.');
+        Alert.alert('Permission Denied', 'Permission to access the camera was denied.');
         return;
       }
 
-      const result = await ImagePicker.launchImageLibraryAsync({
+      // Launch the camera
+      const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [1, 1],
@@ -44,7 +46,7 @@ const CreateHunt = ({ navigation }) => {
       });
 
       if (result.canceled) {
-        console.log('Image selection canceled');
+        console.log('Image capture canceled');
         return;
       }
 
@@ -63,11 +65,11 @@ const CreateHunt = ({ navigation }) => {
           setSelectedImageUri(downloadURL);
         }
       } else {
-        console.log('No image selected');
+        console.log('No image captured');
       }
 
     } catch (error) {
-      console.error('Error selecting image:', error);
+      console.error('Error capturing image:', error);
     }
   };
 

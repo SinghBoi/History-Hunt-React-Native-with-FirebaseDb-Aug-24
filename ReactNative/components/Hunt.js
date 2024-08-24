@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native';
 import ImageComp from './ImageComp'
 import { getHunt } from '../util/http';
 
@@ -16,9 +15,7 @@ const Hunt = ({hunt, setHunt, huntName, onPressHandler }) => {
       }
     };
     fetchHunt();
-  }, [huntName]);
-
-  
+  }, [huntName]);  
   
   if (hunt) {
     return (

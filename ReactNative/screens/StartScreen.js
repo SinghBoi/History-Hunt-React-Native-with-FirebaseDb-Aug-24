@@ -13,15 +13,9 @@ const StartScreen = ({ route, navigation }) => {
     console.log("Planned Hunt clicked");
   };
 
-  // Handler for active hunts
-  const onActiveHuntPress = (hunt) => {
-    navigation.navigate("ConfirmHunt", {hunt});
-  };
-
-
   const data = [
     { key: 'user', component: <User user={user} /> },
-    { key: 'activeHunts', component: <ActiveHunts user={user} onPressHandler={onActiveHuntPress}/> },
+    { key: 'activeHunts', component: <ActiveHunts user={user} navigation={navigation}/> },
     { key: 'plannedHunts', component: <PlannedHunts user={user} onPressHandler={onPlannedHuntPress}/> },
     {
       key: 'createHunt',
@@ -34,7 +28,7 @@ const StartScreen = ({ route, navigation }) => {
         </Text>
       ),
     },
-    { key: 'medals', component: <Medals /> },
+    { key: 'medals', component: <Medals user={user} /> },
   ];
 
   return (

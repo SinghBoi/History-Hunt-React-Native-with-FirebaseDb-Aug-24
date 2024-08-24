@@ -55,9 +55,11 @@ const LocationScreen = ({ navigation, route }) => {
           const inviteeId = await http.getUserId(user.email); 
           const updatedInvitee = {
             ...user,
-            activeHunts: user.activeHunts ? [...user.activeHunts, { huntName }] : [{ huntName }],
+            activeHunts: user.activeHunts ? [...user.activeHunts, { huntName, completed: false }] : [{ huntName, completed: false }],
           };
           await http.updateUser(inviteeId, updatedInvitee);
+          userContext.updateUser(inviteeId, updatedInvitee);
+          
         }
 
         // Update the loggedInUser's planned hunts 
@@ -66,9 +68,10 @@ const LocationScreen = ({ navigation, route }) => {
           PlannedHunts: loggedInUser.PlannedHunts ? [...loggedInUser.PlannedHunts, { huntName }] : [{ huntName }],
         };
         await http.updateUser(loggedInUserId, updatedLoggedInUser);
+        userContext.updateUser(loggedInUserId, updatedLoggedInUser);
 
         // Navigate to the StartScreen
-        navigation.navigate('StartScreen', { user: loggedInUser });
+        navigation.navigate('StartScreen', { user: updatedLoggedInUser });
       } catch (error) {
         console.error("Error during hunt creation:", error);
         Alert.alert('Error', 'Failed to create and update hunt information');

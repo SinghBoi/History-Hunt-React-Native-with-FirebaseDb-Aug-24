@@ -4,7 +4,10 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 const { width } = Dimensions.get('window'); 
 const medalSize = width * 0.15; 
 
-const Medals = () => {
+const Medals = ({ user }) => {
+  // Calculate the number of completed hunts
+  const completedHuntsCount = user.activeHunts?.filter(hunt => hunt.completed)?.length || 0;
+  const medalsArray = Array.from({ length: completedHuntsCount }, (_, index) => index);
 
   return (
     <View style={styles.container}>
@@ -13,25 +16,14 @@ const Medals = () => {
         <Text style={styles.text}>MEDALS</Text>
         <View style={styles.line} />
       </View>
-      
       <View style={styles.medalContainer}>
-        <View style={styles.row}>
-          <View style={styles.medal} />
-          <View style={styles.medal} />
-          <View style={styles.medal} />
-          <View style={styles.medal} />
-          <View style={styles.medal} />
-        </View>
-        <View style={styles.row}>
-          <View style={styles.medal} />
-          <View style={styles.medal} />
-          <View style={styles.medal} />
-          <View style={styles.medal} />
-          <View style={styles.medal} />
-        </View>
+        {/* Render medals */}
+        {medalsArray.map((_, index) => (
+          <View key={index} style={styles.medal} />
+        ))}
       </View>
     </View>
-  );fire
+  );
 };
 
 const styles = StyleSheet.create({
@@ -59,20 +51,17 @@ const styles = StyleSheet.create({
     marginTop: 20, 
     paddingHorizontal: 10,
     width: '100%', 
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 15,
-    width: '100%', 
   },
   medal: {
     height: medalSize,
     width: medalSize,
-    backgroundColor: 'gray',
-    borderRadius: medalSize/2, 
+    backgroundColor: 'green',
+    borderRadius: medalSize / 2, 
+    margin: 5,
   },
 });
 

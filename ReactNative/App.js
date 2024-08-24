@@ -11,6 +11,7 @@ import CreateHunt from './components/CreateHunt';
 import InviteFriendScreen from './screens/InviteFriendsScreen'
 import ConfirmHuntScreen from './screens/ConfirmHuntScreen';
 import LocationScreen from './screens/LocationScreen';
+import CompleteHuntScreen from './screens/CompleteHuntScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -21,15 +22,19 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false}}/>
-            <Stack.Screen name="inviteFriend" component={InviteFriendScreen} options={{ headerShown: true,headerTitle: '',
+            <Stack.Screen name="inviteFriend" component={InviteFriendScreen} options={{ headerShown: true, headerTitle: '',
               headerBackTitleVisible: false,
             }} />
-            <Stack.Screen name="createHunt" component={CreateHunt} options={{ headerShown: true,headerTitle: '',
+            <Stack.Screen name="createHunt" component={CreateHunt} options={{ headerShown: true, headerTitle: '',
               headerBackTitleVisible: false }}/>
-            <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: true}}/> 
+            <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: true, headerTitle: '',
+              headerBackTitleVisible: false, }}/> 
             <Stack.Screen name='SignUpScreen' component={SignUpScreen} options={{ headerShown: false}}/>  
             <Stack.Screen name='StartScreen' component={StartScreen} options={{ headerShown: false}}/>
-            <Stack.Screen name="ConfirmHunt" component={ConfirmHuntScreen} options={{ headerShown: true}}/>
+            <Stack.Screen name="ConfirmHunt" component={ConfirmHuntScreen} options={{ headerShown: true, headerTitle: '',
+              headerBackTitleVisible: false, }} />
+            <Stack.Screen name="CompleteHunt" component={CompleteHuntScreen} options={{ headerShown: true, headerTitle: '',
+              headerBackTitleVisible: false,}}/>
           </Stack.Navigator>
         </NavigationContainer>
       </UserContextProvider>
